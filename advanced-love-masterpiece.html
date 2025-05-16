@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ultimate Love Experience</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Roboto:wght@400;700&display=swap');
+
+    :root {
+      --color-pink-light: #ff8abf;
+      --color-pink-dark: #d81e5b;
+      --color-bg-light: #fff0f6;
+      --color-bg-dark: #1e0a1f;
+      --color-white: #fff;
+      --color-shadow: rgba(255, 20, 120, 0.35);
+      --color-glow: #ff4078;
+      --transition-time: 0.6s;
+    }
+
+    /* Dark/light mode root variables */
+
+    body.light {
+      --color-bg: var(--color-bg-light);
+      --color-text: var(--color-pink-dark);
+      --color-shadow-main: rgba(255, 136, 166, 0.35);
+      --color-glow-main: #ff88ac;
+      background: var(--color-bg-light);
+    }
+
+    body.dark {
+      --color-bg: var(--color-bg-dark);
+      --color-text: var(--color-pink-light);
+      --color-shadow-main: var(--color-shadow);
+      --color-glow-main: var(--color-glow);
+      background: var(--color-bg-dark);
+    }
+
+    /* Reset and globals */
+    * {
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      color: var(--color-text);
+      background: var(--color-bg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      padding: 1rem 1rem 4rem 1rem;
+      transition: background var(--transition-time), color var(--transition-time);
+      user-select: none;
+    }
+
+    h1 {
+      font-family: 'Parisienne', cursive;
+      font-size: clamp(4rem, 12vw, 6rem);
+      margin: 0 0 0.25em 0;
+      text-align: center;
+      background: linear-gradient(45deg, var(--color-pink-light), var(--color-pink-dark));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 12px var(--color-shadow-main));
+      transition: filter var(--transition-time);
+    }
+
+    h2 {
+      font-weight: 400;
+      font-size: clamp(1.1rem, 2vw, 1.6rem);
+      margin-top: 0;
+      max-width: 380px;
+      text-align: center;
+      letter-spacing: 1px;
+      color: var(--color-text);
+      text-shadow: 0 0 10px var(--color-shadow-main);
+      user-select: text;
+    }
+
+    /* Typewriter container with morphing text */
+    .typewriter {
+      position: relative;
+      font-weight: 700;
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      max-width: 400px;
+      color: var(--color-pink-dark);
+      margin: 1.5rem auto 2.5rem auto;
+      min-height: 2.5em;
+      user-select: none;
+      overflow: hidden;
+      border-right: 3px solid var(--color-pink-dark);
+      white-space: nowrap;
+      animation: blink-caret 1s step-end infinite;
+      transition: color var(--transition-time);
+    }
+
+    /* Custom fade animation for typed text */
+    .fade-out {
+      animation: fadeOut 1.3s forwards;
+    }
+    .fade-in {
+      animation: fadeIn 1.3s forwards;
+    }
+
+    @keyframes blink-caret {
+      50% { border-color: transparent; }
+    }
+    @keyframes fadeOut {
+      to {opacity: 0;}
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    /* Heart pulse SVG */
+    #heart-svg {
+      position: relative;
+      width: 160px;
+      height: 160px;
+      margin: 0 auto 2rem auto;
+      filter: drop-shadow(0 0 16px var(--color-glow-main));
+      animation: pulse 2.5s ease-in-out infinite;
+      cursor: default;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+
+    /* Toggle button for dark/light mode */
+    .mode-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: transparent;
+      border: 2.5px solid var(--color-pink-dark);
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      cursor: pointer;
+      color: var(--color-pink-dark);
+      font-weight: 800;
+      font-size: 1rem;
+      line-height: 44px;
+      text-align: center;
+      user-select: none;
+      box-shadow: 0 0 8px var(--color-shadow-main);
+      transition:
+        color var(--transition-time),
+        border-color var(--transition-time),
+        box-shadow var(--transition-time);
+      z-index: 50;
+    }
+    .mode-toggle:hover {
+      color: var(--color-pink-light);
+      border-color: var(--color-pink-light);
+      box-shadow: 0 0 18px var(--color-pink-light);
+    }
+
+    /* Audio control button */
+    .audio-control {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: var(--color-pink-dark);
+      color: var(--color-white);
+      border: none;
+      border-radius: 50%;
+      width: 56px;
+      height: 56px;
+      box-shadow: 0 0 14px var(--color-glow-main);
+      cursor: pointer;
+      outline: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease;
+      z-index: 50;
+    }
+    .audio-control:hover {
+      background: var(--color-pink-light);
+      box-shadow: 0 0 24px var(--color-pink-light);
+    }
+    .audio-control svg {
+      width: 28px;
+      height: 28px;
+      fill: currentColor;
+    }
+
+    /* Interactive particle background canvas */
+    #canvas-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      user-select: none;
+      filter: drop-shadow(0 0 6px var(--color-glow-main));
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 3.5rem;
+      }
+      h2{
+        font-size: 1rem;
+        max-width: 320px;
+      }
+      #heart-svg {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 1.6rem;
+      }
+      .audio-control, .mode-toggle {
+        width: 44px;
+        height: 44px;
+      }
+      .audio-control svg, .mode-toggle svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+  </style>
+</head>
+<body class="light">
+
+  <!-- Dark/light mode toggle -->
+  <button class="mode-toggle" aria-label="Toggle dark/light mode" title="Toggle Dark/Light Mode" id="modeToggle" tabindex="0" >🌙</button>
+
+  <!-- Heart SVG with pulse animation -->
+  <svg id="heart-svg" viewBox="0 0 100 90" aria-hidden="true" role="img" aria-label="Beating heart icon" >
+    <path fill="url(#grad1)" stroke="none" d="M50 88s38-23.3 38-52C88 19.9 74 10 62.3 10 54.7 10 50 22 50 22S45.3 10 37.7 10C26 10 12 19.9 12 36c0 28.7 38 52 38 52z"/>
+    <defs>
+      <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#ff6984; stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#d81e5b; stop-opacity:1" />
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <h1>Love</h1>
+  <h2>“Where there is love, there is life.”</h2>
+
+  <!-- Typewriter effect container -->
+  <div class="typewriter" id="typewriter"></div>
+
+  <!-- Audio control -->
+  <button class="audio-control" id="audioControl" aria-label="Play/Pause Love Music" title="Play/Pause Love Music" tabindex="0">
+    <svg id="audioIcon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 9v6h4l5 5V4L7 9H3z"/>
+    </svg>
+  </button>
+
+  <!-- Background particle canvas -->
+  <canvas id="canvas-bg" aria-hidden="true"></canvas>
+
+<script>
+  (() => {
+    // Variables for DOM elements
+    const typeWriterElem = document.getElementById('typewriter');
+    const bodyElem = document.body;
+    const modeToggleBtn = document.getElementById('modeToggle');
+    const audioBtn = document.getElementById('audioControl');
+    const audioIcon = document.getElementById('audioIcon');
+
+    // Messages for Typewriter
+    const messages = [
+      "My heart beats only for you.",
+      "Together forever — our love, eternal.",
+      "You are my endless joy and inspiration.",
+      "In your arms, I've found my forever home."
+    ];
+    let messageIndex = 0;
+
+    // Typewriter typing with fade transitions
+    async function typeMessage(msg) {
+      // fade-in text
+      typeWriterElem.classList.remove('fade-out');
+      typeWriterElem.classList.add('fade-in');
+
+      typeWriterElem.textContent = '';
+      let i = 0;
+      while (i < msg.length) {
+        typeWriterElem.textContent += msg.charAt(i);
+        i++;
+        await new Promise(r => setTimeout(r, 80));
+      }
+
+      // wait for a while
+      await new Promise(r => setTimeout(r, 2000));
+
+      typeWriterElem.classList.remove('fade-in');
+      typeWriterElem.classList.add('fade-out');
+
+      // wait for fade out to finish
+      await new Promise(r => setTimeout(r, 1300));
+    }
+
+    async function cycleMessages() {
+      while (true) {
+        await typeMessage(messages[messageIndex]);
+        messageIndex = (messageIndex + 1) % messages.length;
+      }
+    }
+    // Start the loop
+    cycleMessages();
+
+    // Dark/light mode toggle logic
+    function setMode(newMode) {
+      if (newMode === 'dark') {
+        bodyElem.classList.remove('light');
+        bodyElem.classList.add('dark');
+        modeToggleBtn.textContent = '☀️';
+      } else {
+        bodyElem.classList.remove('dark');
+        bodyElem.classList.add('light');
+        modeToggleBtn.textContent = '🌙';
+      }
+      localStorage.setItem('loveSiteMode', newMode);
+    }
+    // Initial mode load
+    const savedMode = localStorage.getItem('loveSiteMode');
+    if(savedMode) {
+      setMode(savedMode);
+    } else {
+      setMode('light');
+    }
+    modeToggleBtn.addEventListener('click', () => {
+      const currentMode = bodyElem.classList.contains('dark') ? 'dark' : 'light';
+      setMode(currentMode === 'dark' ? 'light' : 'dark');
+    });
+
+    // Background particle system: romantic glowing particles with mouse interaction
+    const canvas = document.getElementById('canvas-bg');
+    const ctx = canvas.getContext('2d');
+    let W, H;
+    function resizeCanvas() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * W;
+        this.y = Math.random() * H;
+        this.radius = 1 + Math.random() * 2;
+        this.speedX = (Math.random() - 0.5) * 0.3;
+        this.speedY = (Math.random() - 0.5) * 0.3;
+        this.life = 0;
+        this.maxLife = 100 + Math.random() * 100;
+        this.opacity = 0;
+        this.color = (bodyElem.classList.contains('dark')) 
+          ? 'rgba(255, 90, 150, OP)'
+          : 'rgba(255, 20, 70, OP)';
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.life += 1;
+        if(this.life < 20) this.opacity += 0.02;
+        else if(this.life > this.maxLife - 20) this.opacity -= 0.02;
+
+        if(this.x < 0) this.x = W;
+        else if (this.x > W) this.x = 0;
+        if(this.y < 0) this.y = H;
+        else if (this.y > H) this.y = 0;
+
+        if(this.life >= this.maxLife) {
+          this.reset();
+        }
+      }
+      draw(ctx) {
+        ctx.beginPath();
+        let gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius*3);
+        gradient.addColorStop(0, this.color.replace('OP', this.opacity.toFixed(2)));
+        gradient.addColorStop(1, this.color.replace('OP', '0'));
+        ctx.fillStyle = gradient;
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    const particles = [];
+    for(let i=0; i < 200; i++) {
+      particles.push(new Particle());
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, W, H);
+      for(let p of particles) {
+        p.update();
+        p.draw(ctx);
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // Mouse interaction: particles attracted to mouse
+    let mouseX = null;
+    let mouseY = null;
+
+    window.addEventListener('mousemove', e => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+    window.addEventListener('mouseout', e => {
+      mouseX = null;
+      mouseY = null;
+    });
+
+    function attractParticles() {
+      if(mouseX === null || mouseY === null) return;
+      particles.forEach(p => {
+        let dx = mouseX - p.x;
+        let dy = mouseY - p.y;
+        let dist = Math.sqrt(dx*dx + dy*dy);
+        if(dist < 150) {
+          let force = (150 - dist) / 150 * 0.15;
+          p.x += dx * force;
+          p.y += dy * force;
+        }
+      });
+      requestAnimationFrame(attractParticles);
+    }
+    attractParticles();
+
+    // Audio background music control with visualizer-like pulse on heart
+    const audio = new Audio('https://cdn.pixabay.com/download/audio/2021/11/10/audio_034a4cb3a3.mp3?filename=love-song-14603.mp3');
+    audio.loop = true;
+    audio.volume = 0.15;
+    let isPlaying = false;
+
+    audioBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        audio.pause();
+        isPlaying = false;
+        audioBtn.setAttribute('aria-label', 'Play Love Music');
+        audioBtn.title = 'Play Love Music';
+        audioIcon.innerHTML = '<path d="M3 9v6h4l5 5V4L7 9H3z"/>'; // Play icon
+        document.getElementById('heart-svg').style.animationPlayState = 'paused';
+      } else {
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            isPlaying = true;
+            audioBtn.setAttribute('aria-label', 'Pause Love Music');
+            audioBtn.title = 'Pause Love Music';
+            audioIcon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>'; // Pause icon
+            document.getElementById('heart-svg').style.animationPlayState = 'running';
+          }).catch(() => {
+            // Playback prevented. Possibly awaiting user interaction.
+          });
+        }
+      }
+    });
+
+    // Initialize heart pulse paused (until audio plays)
+    document.getElementById('heart-svg').style.animationPlayState = 'paused';
+
+  })();
+</script>
+</body>
+</html>
+
